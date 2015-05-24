@@ -32,13 +32,12 @@ body {margin:0;padding:0;}
   }
   a:hover { color:#101010; }
 
-  .sidebar {
-    background: #333;
+  .footer {
     position:absolute;
-    width:27.3333%;
-    height:100%;
-    top:0;left:0;
-    overflow:hidden;
+    width:100%;
+    height:33%;
+    bottom:0;
+    //overflow:hidden;
     border-right:1px solid rgba(0,0,0,0.25);
   }
   .pad2 {
@@ -49,8 +48,8 @@ body {margin:0;padding:0;}
   }
   .map {
     position:absolute;
-    left:27.333%;
-    width:72.667%;
+    height: 66%;
+    width:100%;
     top:0;bottom:0;
   }
   .listings {
@@ -66,7 +65,7 @@ body {margin:0;padding:0;}
   .listings .item img {
     background: #fff;
     margin-bottom: 10px;
-    height: 100px;
+    height: 300px;
   }
   .listings .item .title {
     display:block;
@@ -101,10 +100,11 @@ body {margin:0;padding:0;}
     visibility:hidden;
   }
   .trigger {
-      color: #fff;
+      color: #000;
       position: relative;
-      top: 10%;
-      left: 34%;
+      top: 97%;
+      left: 5%;
+      z-index: 10;
   }
   
   /* Marker tweaks */
@@ -130,8 +130,8 @@ body {margin:0;padding:0;}
   .leaflet-container .leaflet-marker-icon { cursor:pointer; }
   img.center {
    position: absolute;
-   top: 59%;
-   left: 65%;
+   top: 37%;
+   left: 50%;
    width: 80px;
    height: 80px;
    margin-top: -25px; /* Half the height */
@@ -140,13 +140,14 @@ body {margin:0;padding:0;}
 </style>
 </head>
 <body>
-<div class='sidebar'>
-<div id='listings' class='listings'><span class='trigger fa fa-camera-retro fa-5x'></span></div>
+
+<div id='map' class='map'>
+  <div id='camera' class='listings'><span class='trigger fa fa-camera-retro fa-5x'></span></div>
 </div>
-
-<div id='map' class='map'></div>
-<img src="./img/arrow.png" class="center" id="arrow" />
-
+<img src="./img/crosshair.png" class="center" id="arrow" />
+<div class='footer'>
+  <div id='listings'></div>
+</div>
 <script>
 L.mapbox.accessToken = 'pk.eyJ1IjoidHJpc3RlbiIsImEiOiJiUzBYOEJzIn0.VyXs9qNWgTfABLzSI3YcrQ';
 var map = L.mapbox.map('map', 'grafa.m8p63n24',{zoomControl:false})
@@ -157,7 +158,7 @@ new L.Control.Zoom({ position: 'topright' }).addTo(map);
 L.control.locate().addTo(map);
 
 // click the camera icon to load IG images
-$('#listings').on('click', '.trigger', function() {
+$('#camera').on('click', '.trigger', function() {
     // get IG tokens from https://instagram.com/developer/clients/manage/
     var accessToken = 'fa7735431203415882fa980bd386baca';
     var lat = map.getCenter('features').lat,
