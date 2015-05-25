@@ -129,7 +129,11 @@ body {background: #333; margin:0;padding:0;}
   <div id='listings'></div>
 </div>
 <script>
+
+// get your access token from https://www.mapbox.com/signup/
 L.mapbox.accessToken = 'pk.eyJ1IjoidHJpc3RlbiIsImEiOiJiUzBYOEJzIn0.VyXs9qNWgTfABLzSI3YcrQ';
+
+// Make a custom map with Mapbox Studio https://www.mapbox.com/mapbox-studio/
 var map = L.mapbox.map('map', 'grafa.m8p63n24',{zoomControl:false})
     .setView([40.78060642427845,-73.96661281585693], 13);
   
