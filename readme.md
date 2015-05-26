@@ -6,3 +6,11 @@ A JavaScript application that combines the [Mapbox.js API](https://www.mapbox.co
 information stored with [Instagram's API](https://instagram.com/developer/). The application contains a basic Mapbox map that uses 
 geolocation and the map's center to make requests to Instagram's API and pull in photos that 
 are publicly shared. The query looks for public media within an 80 meter radius of the center.
+
+Privacy concerns? Opt out of services in your Privacy settings:
+
+![](./img/ig-privacy.png)
+
+Or relocate images directly in the Instagram application:
+
+![](./img/ig-map.png)
