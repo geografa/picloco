@@ -24,23 +24,26 @@
   <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.42.0/L.Control.Locate.ie.css' rel='stylesheet' />
 <![endif]-->
 
+<!-- <link rel="stylesheet" href="./css/simplemodal.css" type="text/css" media="screen" title="no title" charset="utf-8">
+<script src="./js/simple-modal.js" type="text/javascript" charset="utf-8"></script> -->
+
 <style>
 body {background: #333; margin:0;padding:0;}
-  * {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+  * {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box; font-family: "Helvetica Neue"}
   h1 {font-size:22px;margin:0;font-weight:400;}
   a {
-    color:#404040;
+    color:#fff;
     text-decoration:none;
   }
-  a:hover { color:#101010; }
+  a:hover { color:#B9D4EE; }
 
   .footer {
+    color: #fff;
     position:absolute;
     width:100%;
     height:33%;
     bottom:0;
     text-align: center;
-    border-right:1px solid rgba(0,0,0,0.25);
   }
   .pad2 {
     padding:20px;
@@ -72,10 +75,7 @@ body {background: #333; margin:0;padding:0;}
   }
   .listings .item .title {
     display:block;
-    color:#fff;
-    font-weight:700;
   }
-  .listings .item .title small { font-weight:400; }
   .listings .item.active .title,
   .listings .item .title:hover { color:#8cc63f; }
   .listings .item.active {
@@ -103,20 +103,35 @@ body {background: #333; margin:0;padding:0;}
     visibility:hidden;
   }
   .trigger {
-      color: #000;
-      position: relative;
-      top: 97%;
-      left: 5%;
-      z-index: 10;
+    color: #000;
+    position: relative;
+    top: 97%;
+    left: 10px;
+    z-index: 10;
   }
 
   img.center {
-   position: absolute;
-   top: 30%;
-   left: 50%;
-   margin-top: -24px; /* Half the height */ 
-   margin-left: -24px; /* Half the width */
-}
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    margin-top: -24px; /* Half the height */ 
+    margin-left: -24px; /* Half the width */
+  }
+  /*fa fa-location-arrow fa-2*/
+  .leaflet-touch .leaflet-control-locate {
+    width: 48px;
+    height: 42px;
+  }
+  .fa-location-arrow {
+    font-size: 30px;
+  }
+  .fa-spinner {
+    font-size: 30px;
+  }
+  .leaflet-control-locate a {
+    width: 42px;
+    height: 38px;
+  }
 </style>
 </head>
 <body>
@@ -127,6 +142,7 @@ body {background: #333; margin:0;padding:0;}
 <img src="./img/crosshair.png" class="center" id="arrow" />
 <div class='footer'>
   <div id='listings'></div>
+  <p><a href="#map">top</a> | <a href="https://github.com/geografa/instageo">about</a></p>
 </div>
 <script>
 
@@ -139,9 +155,11 @@ var map = L.mapbox.map('map', 'grafa.m8p63n24',{zoomControl:false})
   
 new L.Control.Zoom({ position: 'topright' }).addTo(map);
 
-L.control.locate().addTo(map);
+L.control.locate({
+  icon: 'fa fa-location-arrow'
+}).addTo(map);
 
-// click the camera icon to load IG images
+//click the camera icon to load IG images
 $('#camera').on('click', '.trigger', function() {
     // get IG tokens from https://instagram.com/developer/clients/manage/
     var accessToken = 'fa7735431203415882fa980bd386baca';
@@ -172,7 +190,6 @@ $('#camera').on('click', '.trigger', function() {
     });
 });
 
-// the google
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
