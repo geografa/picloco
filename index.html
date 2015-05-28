@@ -112,14 +112,6 @@ body {background: #333; margin:0;padding:0;}
     left: 70px;
     z-index: 10;
   }
-
-  img.center {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    margin-top: -24px; /* Half the height */ 
-    margin-left: -24px; /* Half the width */
-  }
   /*fa fa-location-arrow fa-2*/
   .leaflet-touch .leaflet-control-locate {
     width: 48px;
@@ -159,7 +151,6 @@ body {background: #333; margin:0;padding:0;}
   <a href="http://mapbox.com/about/maps" class='mapbox-maplogo' target="_blank">MapBox</a>
   <div id='camera' class='listings'><span class='trigger fa fa-camera-retro fa-4x'></span></div>
 </div>
-<img src="./img/crosshair.png" class="center" id="arrow" />
 <div class='footer'>
   <div id='listings'></div>
   <p><a href="https://github.com/geografa/picloco">about</a></p>
@@ -171,7 +162,10 @@ body {background: #333; margin:0;padding:0;}
 L.mapbox.accessToken = 'pk.eyJ1IjoidHJpc3RlbiIsImEiOiJiUzBYOEJzIn0.VyXs9qNWgTfABLzSI3YcrQ';
 
 // Make a custom map with Mapbox Studio https://www.mapbox.com/mapbox-studio/ 
-var map = L.mapbox.map('map', 'grafa.m8p63n24',{zoomControl:false})
+var map = L.mapbox.map('map', 'grafa.m8p63n24',{
+  zoomControl:false,
+  maxZoom: 17
+})
     .setView([40.78060642427845,-73.96661281585693], 13);
 
 L.control.locate({
