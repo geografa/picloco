@@ -19,6 +19,9 @@
 <!-- Font awesome -->
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
+<!-- leaflet hash  -->
+<script src='./js/leaflet-hash.js'></script>
+
 <!-- Leaflet Locate -->
 <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.42.0/L.Control.Locate.min.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.42.0/L.Control.Locate.mapbox.css' rel='stylesheet' />
@@ -171,6 +174,8 @@ var map = L.mapbox.map('map', 'grafa.m8p63n24',{
 L.control.locate({
   icon: 'fa fa-location-arrow'
 }).addTo(map);
+
+var hash = new L.Hash(map);
 
 //click the camera icon to load IG images
 $('#camera').on('click', '.trigger', function() {
