@@ -43,7 +43,6 @@ body {background: #333; margin:0;padding:0;}
   a:hover { color:#B9D4EE; }
 
   .footer {
-    padding-top: 20px;
     color: #fff;
     position:absolute;
     width:100%;
@@ -71,7 +70,7 @@ body {background: #333; margin:0;padding:0;}
   }
   .listings .item {
     position: relative;
-    padding:10px;
+    /*padding:10px;*/
     text-decoration:none;
   }
   .listings .item img {
@@ -200,8 +199,11 @@ body {background: #333; margin:0;padding:0;}
     margin: 0 0 15px;
   }
   #open-modal {
-    padding:20px;
+    margin-bottom:50px;
     width: 
+  }
+  .about {
+    padding-bottom: 50px;
   }
 </style>
 </head>
@@ -213,8 +215,8 @@ body {background: #333; margin:0;padding:0;}
   <div id='camera' class='listings'><span class='trigger fa fa-camera-retro fa-4x'></span></div>
 </div>
 <div class='footer'>
-  <div id='listings'></div>
-  <a href="#open-modal">About</a>
+  <div id='listings' class="about"></div>
+  <a href="#open-modal" class="about">About</a>
   <div id="open-modal" class="modal-window">
       <div>
           <a href="#modal-close" title="Close" class="modal-close">Close</a>
