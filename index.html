@@ -43,6 +43,7 @@ body {background: #333; margin:0;padding:0;}
   a:hover { color:#B9D4EE; }
 
   .footer {
+    padding-top: 20px;
     color: #fff;
     position:absolute;
     width:100%;
@@ -146,9 +147,66 @@ body {background: #333; margin:0;padding:0;}
       background-size: 65px 20px;
     }
   
+  /*modal*/
+
+  .modal-window {
+    position:fixed;
+    background-color: rgba(200,200,200,0.75);
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index:999;
+    opacity:0;
+    pointer-events:none;
+    -webkit-transition:all 0.3s;
+    -moz-transition:all 0.3s;
+    transition:all 0.3s;
+  }
+  .modal-window a {
+    color: #2A8FC3;
+  }
+  .modal-window:target {
+    opacity:1;
+    pointer-events:auto;
+  }
+  .modal-window>div {
+    width:250px;
+    position:relative;
+    margin:10% auto;
+    padding:2rem;
+    background:#fff;
+    color:#444;
+  }
+  .modal-window header {
+    font-weight:bold;
+  }
+  .modal-close {
+    color:#aaa;
+    line-height:50px;
+    font-size:80%;
+    position:absolute;
+    right:0;
+    text-align:center;
+    top:0;
+    width:70px;
+    text-decoration:none;
+  }
+  .modal-close:hover {
+    color:#000;
+  }
+  .modal-window h1 {
+    font-size: 150%;
+    margin: 0 0 15px;
+  }
+  #open-modal {
+    padding:20px;
+    width: 
+  }
 </style>
 </head>
 <body>
+<div>
 
 <div id='map' class='map'>  <!-- Add mapbox watermark -->
   <a href="http://mapbox.com/about/maps" class='mapbox-maplogo' target="_blank">MapBox</a>
@@ -156,8 +214,20 @@ body {background: #333; margin:0;padding:0;}
 </div>
 <div class='footer'>
   <div id='listings'></div>
-  <p><a href="https://github.com/geografa/picloco">about</a></p>
-  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://piclo.co/" data-via="geografa">Tweet</a>
+  <a href="#open-modal">About</a>
+  <div id="open-modal" class="modal-window">
+      <div>
+          <a href="#modal-close" title="Close" class="modal-close">Close</a>
+       <h1><a href="https://github.com/geografa/picloco">piclo.co</a></h1>
+       <div>
+          <p>
+            A little web app that combines the <a href="https://www.mapbox.com/mapbox.js/">Mapbox.js API</a> with location information stored with <a href="https://instagram.com/developer/">Instagram's API</a>. Using the map's center, make requests to Instagram to load photos in a 80 meter radius that are publicly shared.
+          </p>
+       </div>
+      </div>
+  </div>
+</div>
+
 </div>
 <script>
 
