@@ -12,25 +12,12 @@
 <!-- jquery -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
 
-<!-- Mapbox.js API  -->
-<script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.2/mapbox.css' rel='stylesheet' />
+<!-- Mapbox GL JS API  -->
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.4/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.4/mapbox-gl.css' rel='stylesheet' />
 
 <!-- Font awesome -->
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-<!-- leaflet hash  -->
-<script src='./js/leaflet-hash.js'></script>
-
-<!-- Leaflet Locate -->
-<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.42.0/L.Control.Locate.min.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.42.0/L.Control.Locate.mapbox.css' rel='stylesheet' />
-<!--[if lt IE 9]>
-  <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.42.0/L.Control.Locate.ie.css' rel='stylesheet' />
-<![endif]-->
-
-<!-- <link rel="stylesheet" href="./css/simplemodal.css" type="text/css" media="screen" title="no title" charset="utf-8">
-<script src="./js/simple-modal.js" type="text/javascript" charset="utf-8"></script> -->
 
 <style>
 body {background: #333; margin:0;padding:0;}
@@ -62,6 +49,7 @@ body {background: #333; margin:0;padding:0;}
     height: 66%;
     width:100%;
     top:0;bottom:0;
+    z-index: 999;
   }
   .listings {
     height:100%;
@@ -115,21 +103,7 @@ body {background: #333; margin:0;padding:0;}
     left: 70px;
     z-index: 10;
   }
-  /*fa fa-location-arrow fa-2*/
-  .leaflet-touch .leaflet-control-locate {
-    width: 48px;
-    height: 42px;
-  }
-  .fa-location-arrow {
-    font-size: 30px;
-  }
-  .fa-spinner {
-    font-size: 30px;
-  }
-  .leaflet-control-locate a {
-    width: 42px;
-    height: 38px;
-  }
+
   .mapbox-maplogo {
       position:absolute;
       display:block;
@@ -210,9 +184,9 @@ body {background: #333; margin:0;padding:0;}
 <body>
 <div>
 
-<div id='map' class='map'>  <!-- Add mapbox watermark -->
+<div id='map' class='map'>  <!-- Add mapbox logo -->
   <a href="http://mapbox.com/about/maps" class='mapbox-maplogo' target="_blank">MapBox</a>
-  <div id='camera' class='listings'><span class='trigger fa fa-camera-retro fa-4x'></span></div>
+  <div id='camera'><span class='trigger fa fa-camera-retro fa-4x'></span></div>
 </div>
 <div class='footer'>
   <div id='listings' class="about"></div>
@@ -232,22 +206,14 @@ body {background: #333; margin:0;padding:0;}
 
 </div>
 <script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiZjk3Mjk2YWYzZTNlYjM3ODdlNzJlOWJlM2VjZGI0ZDEifQ.OTT9oT7CqAc9vZsnJLT51Q';
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v8', //stylesheet location
+    center: [-74.50, 40], // starting position
+    zoom: 9 // starting zoom
+});
 
-// get your access token from https://www.mapbox.com/signup/
-L.mapbox.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiYWIzODY5NzBiZDI5YjhiMzQ0ZmQxYzlkN2FjZjdiZTAifQ.eYRevwROaI-tEbs6--VuLA';
-
-// Make a custom map with Mapbox Studio https://www.mapbox.com/mapbox-studio/ 
-var map = L.mapbox.map('map', 'grafa.m8p63n24',{
-  zoomControl:false,
-  maxZoom: 17
-})
-    .setView([40.78060642427845,-73.96661281585693], 13);
-
-L.control.locate({
-  icon: 'fa fa-location-arrow'
-}).addTo(map);
-
-var hash = new L.Hash(map);
 
 //click the camera icon to load IG images
 $('#camera').on('click', '.trigger', function() {
