@@ -119,7 +119,32 @@ body {background: #333; margin:0;padding:0;}
       background-position: 0 0 ;
       background-size: 65px 20px;
     }
+
+  #camera {
+    background: #fff;
+  }
   
+  /*geolocation button*/
+  
+  .ui-button {
+    background:#3887BE;
+    color:#FFF;
+    display:block;
+    position:absolute;
+    top:50%;left:50%;
+    width:160px;
+    margin:-20px 0 0 -80px;
+    z-index:100;
+    text-align:center;
+    padding:10px;
+    border:1px solid rgba(0,0,0,0.4);
+    border-radius:3px;
+    }
+    .ui-button:hover {
+      background:#3074a4;
+      color:#fff;
+      }
+
   /*modal*/
 
   .modal-window {
@@ -185,6 +210,7 @@ body {background: #333; margin:0;padding:0;}
 <div>
 
 <div id='map' class='map'>  <!-- Add mapbox logo -->
+  <a href='#' id='geolocate' class='ui-button'>Find me</a>
   <a href="http://mapbox.com/about/maps" class='mapbox-maplogo' target="_blank">MapBox</a>
   <div id='camera'><span class='trigger fa fa-camera-retro fa-4x'></span></div>
 </div>
@@ -214,6 +240,31 @@ var map = new mapboxgl.Map({
     zoom: 13 // starting zoom
 });
 
+var geolocate = document.getElementById('geolocate');
+
+if (!navigator.geolocation) {
+    geolocate.innerHTML = 'Geolocation is not available';
+} else {
+    geolocate.onclick = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        getLocation();
+    };
+}
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        geolocate.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    map.setCenter([position.coords.longitude,position.coords.latitude]);
+        // And hide the geolocation button
+    geolocate.parentNode.removeChild(geolocate);
+}
 
 //click the camera icon to load IG images
 $('#camera').on('click', '.trigger', function() {
@@ -229,8 +280,6 @@ $('#camera').on('click', '.trigger', function() {
         type: 'GET',
         data: {client_id: accessToken},
         success: function(data){
-            console.log(data);
-
             var listing = listings.appendChild(document.createElement('div'));
             $("div").remove(".item");
 
@@ -244,7 +293,10 @@ $('#camera').on('click', '.trigger', function() {
             }
         }
     });
-    // show('toplink');
+});
+
+map.on('locationerror', function() {
+    geolocate.innerHTML = 'Position could not be found';
 });
 
 // twitter
