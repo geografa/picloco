@@ -119,6 +119,10 @@ body {background: #333; margin:0;padding:0;}
       background-position: 0 0 ;
       background-size: 65px 20px;
     }
+
+  #camera {
+    background: #fff;
+  }
   
   /*geolocation button*/
   
@@ -276,8 +280,6 @@ $('#camera').on('click', '.trigger', function() {
         type: 'GET',
         data: {client_id: accessToken},
         success: function(data){
-            console.log(data);
-
             var listing = listings.appendChild(document.createElement('div'));
             $("div").remove(".item");
 
@@ -291,33 +293,8 @@ $('#camera').on('click', '.trigger', function() {
             }
         }
     });
-    // show('toplink');
 });
 
-// // Once we've got a position, zoom and center the map
-// // on it, and add a single marker.
-// map.on('locationfound', function(e) {
-//     map.fitBounds(e.bounds);
-
-//     // myLayer.setGeoJSON({
-//     //     type: 'Feature',
-//     //     geometry: {
-//     //         type: 'Point',
-//     //         coordinates: [e.latlng.lng, e.latlng.lat]
-//     //     },
-//     //     properties: {
-//     //         'title': 'Here I am!',
-//     //         'marker-color': '#ff8888',
-//     //         'marker-symbol': 'star'
-//     //     }
-//     // });
-
-//     // And hide the geolocation button
-//     geolocate.parentNode.removeChild(geolocate);
-// });
-
-// If the user chooses not to allow their location
-// to be shared, display an error message.
 map.on('locationerror', function() {
     geolocate.innerHTML = 'Position could not be found';
 });
