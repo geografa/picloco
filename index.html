@@ -103,6 +103,9 @@ body {background: #333; margin:0;padding:0;}
     left: 10px;
     z-index: 10;
   }
+    .trigger:hover {
+      color: #FF5600;
+    }
 
   .mapbox-maplogo {
       position:absolute;
@@ -125,8 +128,14 @@ body {background: #333; margin:0;padding:0;}
   }
   
   /*geolocation button*/
-  
   .ui-button {
+    color: #444;
+    position: absolute;
+    top: 6px;
+    left: 80px;
+    z-index: 10;
+  }
+/*  .ui-button {
     background:#3887BE;
     color:#FFF;
     display:block;
@@ -139,10 +148,9 @@ body {background: #333; margin:0;padding:0;}
     padding:10px;
     border:1px solid rgba(0,0,0,0.4);
     border-radius:3px;
-    }
+    }*/
     .ui-button:hover {
-      background:#3074a4;
-      color:#fff;
+      color:#FF5600;
       }
 
   /*modal*/
@@ -210,7 +218,8 @@ body {background: #333; margin:0;padding:0;}
 <div>
 
 <div id='map' class='map'>  <!-- Add mapbox logo -->
-  <a href='#' id='geolocate' class='ui-button'>Find me</a>
+  <div id='geolocate'><span class='ui-button fa fa-location-arrow fa-4x'></span></div>
+  <!-- <a href='#' id='geolocate' class='ui-button'>Find me</a> -->
   <a href="http://mapbox.com/about/maps" class='mapbox-maplogo' target="_blank">MapBox</a>
   <div id='camera'><span class='trigger fa fa-camera-retro fa-4x'></span></div>
 </div>
@@ -262,8 +271,6 @@ function getLocation() {
 
 function showPosition(position) {
     map.setCenter([position.coords.longitude,position.coords.latitude]);
-        // And hide the geolocation button
-    geolocate.parentNode.removeChild(geolocate);
 }
 
 //click the camera icon to load IG images
