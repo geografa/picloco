@@ -100,46 +100,41 @@
         clear:both;
         visibility:hidden;
     }
-    .trigger {
+    .btn-camera {
         color: #444;
         position: absolute;
         top: 6px;
         left: 10px;
         z-index: 10;
     }
-    .trigger:hover {
-      color: #FF5600;
-  }
-
+        .btn-camera:hover {
+            color: #FF5600;
+        }
   #camera {
     background: #fff;
 }
 
 /*geolocation button*/
-.ui-button {
+.btn-locate {
     color: #444;
     position: absolute;
     top: 6px;
     left: 80px;
     z-index: 10;
 }
-/*  .ui-button {
-    background:#3887BE;
-    color:#FFF;
-    display:block;
-    position:absolute;
-    top:50%;left:50%;
-    width:160px;
-    margin:-20px 0 0 -80px;
-    z-index:100;
-    text-align:center;
-    padding:10px;
-    border:1px solid rgba(0,0,0,0.4);
-    border-radius:3px;
-    }*/
-    .ui-button:hover {
-      color:#FF5600;
-  }
+    .btn-locate:hover {
+        color:#FF5600;
+    }
+
+/*geocoding/search*/
+input {
+    z-index: 10000 !important;
+    position: absolute;
+    background-color: #3BB2D0;
+    color: white;
+    font-size: 36pt;
+    left: 300px;
+}
 
   /*modal*/
 
@@ -206,8 +201,8 @@
     <div>
 
         <div id='map' class='map'>
-          <div id='geolocate'><span class='ui-button fa fa-location-arrow fa-4x'></span></div>
-          <div id='camera'><span class='trigger fa fa-camera-retro fa-4x'></span></div>
+          <div id='geolocate'><span class='btn-locate fa fa-location-arrow fa-4x'></span></div>
+          <div id='camera'><span class='btn-camera fa fa-camera-retro fa-4x'></span></div>
       </div>
       <div class='footer'>
           <div id='listings' class="about"></div>
@@ -261,7 +256,7 @@ function showPosition(position) {
 }
 
 //click the camera icon to load IG images
-$('#camera').on('click', '.trigger', function() {
+$('#camera').on('click', '.btn-camera', function() {
     // get IG tokens from https://instagram.com/developer/clients/manage/
     var accessToken = 'fa7735431203415882fa980bd386baca';
     var lat = map.getCenter('features').lat,
