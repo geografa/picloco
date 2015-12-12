@@ -37,6 +37,10 @@
         bottom:0;
         text-align: center;
         font-family: 'Patua One', cursive;
+        text-transform: uppercase;
+    }
+    .footer a:hover {
+        color: #FF5600;
     }
     .pad2 {
         padding:20px;
@@ -207,14 +211,15 @@
       </div>
       <div class='footer'>
           <div id='listings' class="about"></div>
-          <a href="#open-modal" class="about">About</a>
+          <a href="#open-modal" class="about">about</a> | <a href="#camera">back to top</a>
           <div id="open-modal" class="modal-window">
               <div>
-                  <a href="#modal-close" title="Close" class="modal-close">Close</a>
+                  <a href="#modal-close" title="Close" class="modal-close"><span class='fa fa-close fa-2x'></span></a>
+                  <a href="https://github.com/geografa/picloco"><span class='fa fa-github-alt fa-1'></span></a>
                   <h1><a href="https://github.com/geografa/picloco">piclo.co</a></h1>
                   <div>
                       <p>
-                        A little web app that combines the <a href="https://www.mapbox.com/mapbox.js/">Mapbox.js API</a> with location information stored with <a href="https://instagram.com/developer/">Instagram's API</a>. Click the <br /><span class="fa fa-camera-retro fa-2x"></span> <br />camera icon to load publicly shared images within 80 meters of the map's center. Click the <br /><span class=" fa fa-location-arrow fa-2x"></span><br /> arrow to locate your own position.
+                        A little web app that combines the <a href="https://www.mapbox.com/mapbox-gl-js/api/">Mapbox GL JS API</a> with location information stored with <a href="https://instagram.com/developer/">Instagram's API</a>. Click the <br /><span class="fa fa-camera-retro fa-2x"></span> <br />camera icon to load publicly shared images within 80 meters of the map's center. Click the <br /><span class=" fa fa-location-arrow fa-2x"></span><br /> arrow to locate your own position.
                     </p>
                 </div>
             </div>
