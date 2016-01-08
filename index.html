@@ -21,8 +21,8 @@
     <link rel="icon" type="image/ico" href="favicon.ico">
     <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.4/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.4/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.2/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.2/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <style>
     body {background: #333; margin:0;padding:0;}
@@ -203,6 +203,10 @@ input {
 </style>
 </head>
 <body>
+
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.0.0/mapbox-gl-geocoder.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.0.0/mapbox-gl-geocoder.css' type='text/css' />
+
     <div>
 
         <div id='map' class='map'>
@@ -235,6 +239,8 @@ var map = new mapboxgl.Map({
     center: [4.901119675444164,52.36978048256796], // starting position
     zoom: 13 // starting zoom
 });
+
+map.addControl(new mapboxgl.Geocoder());
 
 var geolocate = document.getElementById('geolocate');
 
