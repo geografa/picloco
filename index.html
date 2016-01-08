@@ -131,14 +131,8 @@
         color:#FF5600;
     }
 
-/*geocoding/search*/
-input {
-    z-index: 10000 !important;
-    position: absolute;
-    background-color: #3BB2D0;
-    color: white;
-    font-size: 36pt;
-    left: 300px;
+.suggestions a {
+    color: #333;
 }
 
   /*modal*/
@@ -200,6 +194,7 @@ input {
 .about {
     padding-bottom: 50px;
 }
+
 </style>
 </head>
 <body>
@@ -236,11 +231,13 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiZjk3Mjk2YWYzZTNlYjM3ODdlNzJlO
 var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/grafa/587d7dc0', //stylesheet location
-    center: [4.901119675444164,52.36978048256796], // starting position
+    center: [4.900776352680026,52.372033841764306], // starting position
     zoom: 13 // starting zoom
 });
 
-map.addControl(new mapboxgl.Geocoder());
+var geocoder = new mapboxgl.Geocoder();
+geocoder.options.position = 'top-right';
+map.addControl(geocoder);
 
 var geolocate = document.getElementById('geolocate');
 
