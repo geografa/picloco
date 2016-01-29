@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Tour de Portland</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.13.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.13.1/mapbox-gl.css' rel='stylesheet' />
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<style>
+h2 {font-family: 'Lobster', cursive; font-size: 2em;}
+#map {
+    position: fixed;
+    width:50%;
+}
+#features {
+    width: 50%;
+    margin-left: 50%;
+    font-family: sans-serif;
+    overflow-y: scroll;
+    background-color: #333;
+    color: #fff;
+}
+section {
+    padding:  25px 50px;
+    line-height: 25px;
+    border-bottom: 1px solid #ddd;
+    opacity: 0.25;
+    font-size: 13px;
+}
+section.active {
+    opacity: 1;
+}
+section:last-child {
+    border-bottom: none;
+    margin-bottom: 200px;
+}
+section, img {
+    max-width: 280px;
+}
+</style>
+
+<div id='map'></div>
+<div id='features'>
+        <section id='portland' class='active'>
+            <h2>Le Tour de Portland</h2>
+            <p>"I'm in Portland", she writes, "and want you to take me out to see places. Up for it?".</p>
+            <p>He obliged. (Scroll down...)</p>
+        </section>
+        <section id='tilt'>
+            <h2>TILT</h2>
+            <img src="https://cldup.com/T5_0EPZtmW-3000x3000.jpeg">
+            <p>The most epic of ping pong battles. Sofia: 2, Rafa: 1</p>
+        </section>
+        <section id='powells'>
+            <h2>Powells City of Books</h2>
+            <img src="http://www.powells.com/portals/0/images/locations-burnside-2015.jpg">
+            <p>Unimpressed by the volume of books, they kept moving.</p>
+        </section>
+        <section id='boxer-ramen'>
+            <h2>Boxer Ramen</h2>
+            <img src="http://media.oregonlive.com/ent_impact_dining/photo/boxerramen1jpg-e447bd91a471cf76.jpg">
+            <p>They did not care to wait for the 45 minutes. They moved on.</p>
+        </section>
+        <section id='portland-city-grill'>
+            <h2>Portland City Grill</h2>
+            <img src="https://cldup.com/-zjPkhcTss-1200x1200.jpeg">
+            <p>Beautiful view! Oh, but I look so fat.</p>
+        </section>
+        <section id='saucebox'>
+            <h2>Saucebox</h2>
+            <img src="http://s3-media1.fl.yelpcdn.com/bphoto/JwccUa92UpVkK2slQNwkYA/o.jpg">
+            <p>A most delicious pan-asian treat. Complete with flowery drink.</p>
+        </section>
+        <section id='valentines'>
+            <h2>Valentines</h2>
+            <img src="http://s3-media4.fl.yelpcdn.com/bphoto/Ki8iuPz7u87n0Bb-nhbjYg/ls.jpg">
+            <p>Too many beards. Let's cross the river.</p>
+        </section>
+        <section id='dig'>
+            <h2>Dig a Pony</h2>
+            <img src="http://fixerpdx.com/wp-content/uploads/2015/02/l11.jpg">
+            <p>Oops. Forgot the card back at Portland City Grill. Hope we don't run into you know who!</p>
+        </section>
+        <section id='grand-central-bowl'>
+            <h2>Grand Central Bowl</h2>
+            <img src="https://cldup.com/59bWaoUcHj-3000x3000.jpeg">
+            <p>Rafa triumphs over Sofia 107 to 87. Or something like that.</p>
+        </section>
+        <section id='holocene'>
+            <h2>Holocene</h2>
+            <img src="https://cldup.com/FMt7rzxeUt.gif">
+            <p>Of course, it's appropriate to end the night with a little dancing.</p>
+        </section>
+</div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiZjk3Mjk2YWYzZTNlYjM3ODdlNzJlOWJlM2VjZGI0ZDEifQ.OTT9oT7CqAc9vZsnJLT51Q';
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/grafa/587d7dc0',
+    center: [-122.67773866653444, 45.52245801087795],
+    zoom: 12,
+    bearing: 0,
+    pitch: 45
+});
+
+var locations = {
+    'portland': {
+        bearing: 0,
+        center:[-122.67773866653444, 45.52245801087795],
+            zoom: 12,
+        pitch: 0
+    },
+    'tilt': {
+        bearing: 270,
+        center:[-122.684417,
+          45.525286],
+            zoom: 18,
+        pitch: 0
+    },
+    'powells': {
+        duration: 6000,
+        bearing: 0,
+        center:[-122.681611,
+          45.523202],
+            zoom: 18,
+        pitch: 0
+    },
+    'boxer-ramen': {
+        duration: 6000,
+        bearing: 340,
+        center:[-122.681643,
+          45.522326],
+            zoom: 18,
+        pitch: 0
+    },
+    'portland-city-grill': {
+            duration: 6000,
+            bearing: 205,
+            center:[-122.676051,
+          45.522753],
+            zoom: 14,
+            pitch: 45
+    },
+    'saucebox': {
+        duration: 6000,
+        bearing: 110,
+        center:[-122.677744,
+          45.522411],
+            zoom: 18,
+        pitch: 0
+    },
+    'valentines': {
+        duration: 6000,
+        bearing: 110,
+        center:[-122.672913,
+          45.522469],
+            zoom: 18,
+        pitch: 0
+    },
+    'dig': {
+        duration: 6000,
+        bearing: 40,
+        center:[-122.660518,
+          45.517389],
+            zoom: 18,
+        pitch: 0
+    },
+    'grand-central-bowl': {
+        duration: 6000,
+        bearing: 27,
+        center:[-122.657192,
+          45.51688],
+            zoom: 18,
+        pitch: 0
+    },
+    'holocene': {
+        duration: 6000,
+        bearing: 27,
+        center: [-122.655374,
+          45.517406],
+            zoom: 18,
+        pitch: 0
+    },
+};
+
+// On every scroll event, check which element is on screen
+window.onscroll = function() {
+    var locationNames = Object.keys(locations);
+    for (var i = 0; i < locationNames.length; i++) {
+        var locationName = locationNames[i];
+        if (isElementOnScreen(locationName)) {
+            setActiveChapter(locationName);
+            break;
+        }
+    }
+};
+
+var activeLocationName = 'portland';
+function setActiveChapter(locationName) {
+    if (locationName === activeLocationName) return;
+
+    map.flyTo(locations[locationName]);
+
+    document.getElementById(locationName).setAttribute('class', 'active');
+    document.getElementById(activeLocationName).setAttribute('class', '');
+
+    activelocationName = locationName;
+}
+
+function isElementOnScreen(id) {
+    var element = document.getElementById(id);
+    var bounds = element.getBoundingClientRect();
+    return bounds.top < window.innerHeight && bounds.bottom > 0;
+}
+
+</script>
+
+</body>
+</html>
