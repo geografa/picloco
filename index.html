@@ -21,11 +21,12 @@
     <link rel="icon" type="image/ico" href="favicon.ico">
     <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.19.1/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.19.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.24.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.24.0/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.0.0/mapbox-gl-geocoder.js'></script>
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.0.0/mapbox-gl-geocoder.css' type='text/css' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v1.3.1/mapbox-gl-geocoder.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v1.3.1/mapbox-gl-geocoder.css' type='text/css' />
+
 
 
     <style>
@@ -233,7 +234,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiZjk3Mjk2YWYzZTNlYjM3ODdlNzJlOWJlM2VjZGI0ZDEifQ.OTT9oT7CqAc9vZsnJLT51Q';
 var map = new mapboxgl.Map({
     container: 'map', // container id
-    style: 'mapbox://styles/grafa/587d7dc0', //stylesheet location
+    style: 'mapbox://styles/grafa/ciof7kbzs002mahnm9ju6qjn0/', //stylesheet location
     center: [4.900776352680026,52.372033841764306], // starting position
     zoom: 13 // starting zoom
 });
@@ -269,7 +270,7 @@ function showPosition(position) {
 //click the camera icon to load IG images
 $('#camera').on('click', '.btn-camera', function() {
     // get IG tokens from https://instagram.com/developer/clients/manage/
-    var accessToken = 'fa7735431203415882fa980bd386baca';
+    var accessToken = 'cc1e7fc2edd4444195af77397f68c8d2';
     var lat = map.getCenter('features').lat,
     lng = map.getCenter('features').lng
 
