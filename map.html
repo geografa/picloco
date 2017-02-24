@@ -313,7 +313,7 @@ function getQueryVariable(variable) {
     console.log('Query variable %s not found', variable);
 }
 
-var igToken = getQueryVariable('code');
+var igToken = getQueryVariable('access_token');
 // var igToken = '3799447.cc1e7fc.6fc647968922417daaed49111f4bf61b';
 
 var API_ENDPOINT = 'https://api.instagram.com/v1/locations/search?lat=48.858844&lng=2.294351&access_token=' + igToken;
