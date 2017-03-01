@@ -46,7 +46,7 @@ function getQueryVariable(variable) {
 
 var igToken = getQueryVariable('access_token');
 
-var API_ENDPOINT = 'https://api.instagram.com/v1/media/search?lat=45.52245801087795&lng=-122.67773866653444&callback=?&access_token=' + igToken;
+var API_ENDPOINT = 'https://api.instagram.com/v1/media/search?lat=37.774621693567425&lng=-122.41453124974647&scope=public_scope&callback=?&access_token=' + igToken;
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiZjk3Mjk2YWYzZTNlYjM3ODdlNzJlOWJlM2VjZGI0ZDEifQ.OTT9oT7CqAc9vZsnJLT51Q';
 
@@ -60,6 +60,7 @@ var FeatureCollection = {
 $.getJSON(API_ENDPOINT, function(result, status) {
     
     if (status !== 'success') return alert('Request to IG failed');
+    console.log(result);
     for (var i = result.data.length - 1; i >= 0; i--) {
       var lng = parseFloat(result.data[i].location.longitude);
           lat = parseFloat(result.data[i].location.latitude);
@@ -99,7 +100,7 @@ $.getJSON(API_ENDPOINT, function(result, status) {
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/grafa/cizra0c0x006c2sp6pqer3py2',
-    center: [-122.67773866653444,45.52245801087795],
+    center: [-122.41453124974647,37.774621693567425],
     zoom: 12
 });
 
