@@ -2,304 +2,35 @@
 <html>
 <head>
     <meta charset=utf-8 />
-    <title>picloco | find local images  </title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <meta property="og:description" content="Explore Instagram's publicly shared images."/>
-    <meta property="og:url" content="https://piclo.co/"/>
-    <meta property="og:image" content="https://piclo.co/img/picloco.png"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:site_name" content="Picloco"/>
-
-    <meta name="twitter:card" content="Explore Instagram's publicly shared images.">
-    <meta name="twitter:site" content="@geografa">
-    <meta name="twitter:title" content= "Explore Instagram's publicly shared images.">
-    <meta name="twitter:description" content="Explore Instagram's publicly shared images.">
-    <meta name="twitter:creator" content="eg:Rafa Gutierrez">
-    <meta name="twitter:image:src" content=https://piclo.co/img/picloco.png>
-    <meta name="twitter:domain" content="https://piclo.co/">
-
-    <link rel="icon" type="image/ico" href="favicon.ico">
-    <link href='https://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.24.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.24.0/mapbox-gl.css' rel='stylesheet' />
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v1.3.1/mapbox-gl-geocoder.js'></script>
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v1.3.1/mapbox-gl-geocoder.css' type='text/css' />
+    <title>nearby IG images</title>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.css' rel='stylesheet' />
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
 
     <style>
     body {background: #333; margin:0;padding:0;}
-    * {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
-    h1 {font-size:22px;margin:0;font-weight:400;}
-    a {
-        color:#fff;
-        text-decoration:none;
-    }
-    a:hover { color:#B9D4EE; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
 
-    .footer {
-        color: #fff;
-        position:absolute;
-        width:100%;
-        height:33%;
-        bottom:0;
-        text-align: center;
-        font-family: 'Patua One', cursive;
-        text-transform: uppercase;
-    }
-    .footer a:hover {
-        color: #FF5600;
-    }
-    .pad2 {
-        padding:20px;
-    }
-    .quiet {
-        color:#888;
-    }
-    .map {
-        position:absolute;
-        height: 66%;
-        width:100%;
-        top:0;bottom:0;
-        z-index: 999;
-    }
-    .listings {
-        height:100%;
-        overflow:auto;
-        padding-bottom:60px;
-    }
-    .listings .item {
-        position: relative;
-        /*padding:10px;*/
-        text-decoration:none;
-    }
-    .listings .item img {
-        background: #fff;
-        margin-bottom: 10px;
-        width: 100%;
-        text-align: center;
-    }
-    .listings .item .title {
-        display:block;
-    }
-    .listings .item.active .title,
-    .listings .item .title:hover { color:#8cc63f; }
-    .listings .item.active {
-        background-color:#f8f8f8;
-    }
-    ::-webkit-scrollbar {
-        width:3px;
-        height:3px;
-        border-left:0;
-        background:rgba(0,0,0,0.1);
-    }
-    ::-webkit-scrollbar-track {
-        background:none;
-    }
-    ::-webkit-scrollbar-thumb {
-        background:#FFE800;
-        border-radius:0;
-    }
-    .clearfix { display:block; }
-    .clearfix:after {
-        content:'.';
-        display:block;
-        height:0;
-        clear:both;
-        visibility:hidden;
-    }
-    .btn-camera {
-        color: #444;
-        position: absolute;
-        top: 6px;
-        left: 10px;
-        z-index: 10;
-    }
-        .btn-camera:hover {
-            color: #FF5600;
-        }
-  #camera {
-    background: #fff;
-}
-
-/*geolocation button*/
-.btn-locate {
-    color: #444;
-    position: absolute;
-    top: 6px;
-    left: 80px;
-    z-index: 10;
-}
-    .btn-locate:hover {
-        color:#FF5600;
-    }
-
-.suggestions a {
-    color: #333;
-}
-
-  /*modal*/
-
-  .modal-window {
-    position:fixed;
-    background-color: rgba(200,200,200,0.75);
-    top:0;
-    right:0;
-    bottom:0;
-    left:0;
-    z-index:999;
-    opacity:0;
-    pointer-events:none;
-    -webkit-transition:all 0.3s;
-    -moz-transition:all 0.3s;
-    transition:all 0.3s;
-}
-.modal-window a {
-    color: #2A8FC3;
-}
-.modal-window:target {
-    opacity:1;
-    pointer-events:auto;
-}
-.modal-window>div {
-    width:250px;
-    position:relative;
-    margin:10% auto;
-    padding:2rem;
-    background:#fff;
-    color:#444;
-}
-.modal-window header {
-    font-weight:bold;
-}
-.modal-close {
-    color:#aaa;
-    line-height:50px;
-    font-size:80%;
-    position:absolute;
-    right:0;
-    text-align:center;
-    top:0;
-    width:70px;
-    text-decoration:none;
-}
-.modal-close:hover {
-    color:#000;
-}
-.modal-window h1 {
-    font-size: 150%;
-    margin: 0 0 15px;
-}
-#open-modal {
-    margin-bottom:50px;
-    width: 
-}
-.about {
-    padding-bottom: 50px;
-}
-
-/*geocoder*/
-.mapboxgl-ctrl-geocoder {min-width: 174px;}
-
-</style>
+    </style>
 </head>
 <body>
-    <div>
+<style>
+  #marker {
+      background-image: url('https://www.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg');
+      background-size: cover;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+  }
 
-        <!-- <div id='map' class='map'>
-          <div id='geolocate'><span class='btn-locate fa fa-location-arrow fa-4x'></span></div>
-          <div id='camera'><span class='btn-camera fa fa-camera-retro fa-4x'></span></div>
-      </div> -->
-      <div class='footer'>
-          <div id='listings' class="about"></div>
-          <a href="#open-modal" class="about">about</a> | <a href="#camera">back to top</a>
-          <div id="open-modal" class="modal-window">
-              <div>
-                  <a href="#modal-close" title="Close" class="modal-close"><span class='fa fa-close fa-2x'></span></a>
-                  <a href="https://github.com/geografa/picloco"><span class='fa fa-github-alt fa-1'></span></a>
-                  <h1><a href="https://github.com/geografa/picloco">piclo.co</a></h1>
-                  <div>
-                      <p>
-                        A little web app that combines the <a href="https://www.mapbox.com/mapbox-gl-js/api/">Mapbox GL JS API</a> with location information stored with <a href="https://instagram.com/developer/">Instagram's API</a>. Click the <br /><span class="fa fa-camera-retro fa-2x"></span> <br />camera icon to load publicly shared images within 80 meters of the map's center. Click the <br /><span class=" fa fa-location-arrow fa-2x"></span><br /> arrow to locate your own position.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
+  .mapboxgl-popup {
+      max-width: 200px;
+  }
+</style>
+<div id='map'></div>
 <script>
-// mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiZjk3Mjk2YWYzZTNlYjM3ODdlNzJlOWJlM2VjZGI0ZDEifQ.OTT9oT7CqAc9vZsnJLT51Q';
-// var map = new mapboxgl.Map({
-//     container: 'map', // container id
-//     style: 'mapbox://styles/grafa/ciof7kbzs002mahnm9ju6qjn0/', //stylesheet location
-//     center: [4.900776352680026,52.372033841764306], // starting position
-//     zoom: 13 // starting zoom
-// });
-
-// var geocoder = new mapboxgl.Geocoder();
-// geocoder.options.position = 'top-right';
-// map.addControl(geocoder);
-
-// var geolocate = document.getElementById('geolocate');
-
-// if (!navigator.geolocation) {
-//     geolocate.innerHTML = 'Geolocation is not available';
-// } else {
-//     geolocate.onclick = function (e) {
-//         e.preventDefault();
-//         e.stopPropagation();
-//         getLocation();
-//     };
-// }
-
-// function getLocation() {
-//     if (navigator.geolocation) {
-//         navigator.geolocation.getCurrentPosition(showPosition);
-//     } else { 
-//         geolocate.innerHTML = "Geolocation is not supported by this browser.";
-//     }
-// }
-
-// function showPosition(position) {
-//     map.setCenter([position.coords.longitude,position.coords.latitude]);
-// }
-
-// // //click the camera icon to load IG images
-// // $('#camera').on('click', '.btn-camera', function() {
-// //     // get IG tokens from https://instagram.com/developer/clients/manage/
-// //     var accessToken = 'cc1e7fc2edd4444195af77397f68c8d2';
-// //     var lat = map.getCenter('features').lat,
-// //     lng = map.getCenter('features').lng
-
-// //     $.ajax({
-// //         // distance in meters
-// //         url: 'https://api.instagram.com/v1/media/search?lat=' + lat + '&lng=' + lng + '&distance=80',
-// //         dataType: 'jsonp',
-// //         type: 'GET',
-// //         data: {client_id: accessToken},
-// //         success: function(data){
-// //             var listing = listings.appendChild(document.createElement('div'));
-// //             $("div").remove(".item");
-
-// //             for(x in data.data){
-// //               listing.className = 'item';
-
-// //               var link = listing.appendChild(document.createElement('a'));
-// //               link.href = '#';
-// //               link.className = 'title';
-// //               link.innerHTML = '<a href="http://instagram.com/' +data.data[x].user.username+ '" target="_blank"><img src="'+data.data[x].images.low_resolution.url+'" class="listing item"></a>';
-// //           }
-// //       }
-// //   });
-// // });
-
-// map.on('locationerror', function() {
-//     geolocate.innerHTML = 'Position could not be found';
-// });
-
 
 function getQueryVariable(variable) {
     var query = window.location.hash.substring(1);
@@ -314,30 +45,67 @@ function getQueryVariable(variable) {
 }
 
 var igToken = getQueryVariable('access_token');
-// var igToken = '3799447.cc1e7fc.6fc647968922417daaed49111f4bf61b';
 
-var API_ENDPOINT = 'https://api.instagram.com/v1/locations/search?lat=48.858844&lng=2.294351&access_token=' + igToken;
+var API_ENDPOINT = 'https://api.instagram.com/v1/media/search?lat=45.55378898&lng=-122.6667295&callback=?&access_token=' + igToken;
 
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiZjk3Mjk2YWYzZTNlYjM3ODdlNzJlOWJlM2VjZGI0ZDEifQ.OTT9oT7CqAc9vZsnJLT51Q';
 
-// Use jQuery to make an AJAX request to Foursquare to load markers data.
+var cooords = [];
+
+var FeatureCollection = {
+  type: "FeatureCollection",
+  features: [{"type": "Feature","geometry": {"type": "Point", "coordinates": []},"properties":{}}]
+};
 
 $.getJSON(API_ENDPOINT, function(result, status) {
-        // Transform each venue result into a marker on the map.
-        console.log(result);
+    
+    if (status !== 'success') return alert('Request to IG failed');
+    for (var i = result.data.length - 1; i >= 0; i--) {
+      var lng = parseFloat(result.data[i].location.longitude);
+          lat = parseFloat(result.data[i].location.latitude);
 
+      cooords.push(lng,lat);
+
+      FeatureCollection.features[i].geometry.coordinates
+          .push(cooords);
+      var IGThumb = result.data[i].images.thumbnail.url,
+          IGLink = result.data[i].link;
+          IGPlace = result.data[i].location.name;
+          console.log(result.data[i]);
+    };
+    
+    // add markers to map
+    FeatureCollection.features.forEach(function(marker) {
+      // create the popup
+      var popup = new mapboxgl.Popup({offset: 25})
+          .setHTML('<a href="' + IGLink + '">' + IGPlace+ '</a>');
+          // <a href="http://html.com/attributes/a-href/">Learn about the a href attribute</a>
+
+
+      // create DOM element for the marker
+      var el = document.createElement('div');
+      el.id = 'marker';
+      el.style.backgroundImage = 'url('+ IGThumb + ')';
+
+      // create the marker
+      new mapboxgl.Marker(el, {offset:[-25, -25]})
+          .setLngLat(cooords)
+          .setPopup(popup) // sets a popup on this marker
+          .addTo(map);   
+
+    });
 });
 
-// // twitter
-// !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/grafa/cizra0c0x006c2sp6pqer3py2',
+    center: [-122.67773866653444,45.52245801087795],
+    zoom: 12
+});
 
-// // google-analytics
-// (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-//     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-//     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-// })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-// ga('create', 'UA-63336541-1', 'auto');
-// ga('send', 'pageview');
+</script>
 
 </script>
 </body>
 </html>
+
