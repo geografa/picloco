@@ -23,6 +23,7 @@
       height: 50px;
       border-radius: 50%;
       cursor: pointer;
+    border: 5px solid #fff;
   }
 
   .mapboxgl-popup {
@@ -60,27 +61,25 @@ var FeatureCollection = {
 $.getJSON(API_ENDPOINT, function(result, status) {
     
     if (status !== 'success') return alert('Request to IG failed');
-    console.log(result);
+    // console.log(result);
+
     for (var i = result.data.length - 1; i >= 0; i--) {
-      var lng = parseFloat(result.data[i].location.longitude);
-          lat = parseFloat(result.data[i].location.latitude);
-
-      cooords.push(lng,lat);
-
-      FeatureCollection.features[i].geometry.coordinates
-          .push(cooords);
-      var IGThumb = result.data[i].images.thumbnail.url,
-          IGLink = result.data[i].link;
-          IGPlace = result.data[i].location.name;
-          console.log(result.data[i]);
-    };
+        console.log(result.data.length);
     
-    // add markers to map
-    FeatureCollection.features.forEach(function(marker) {
-      // create the popup
+        var lng = parseFloat(result.data[i].location.longitude);
+        var lat = parseFloat(result.data[i].location.latitude);
+
+        // console.log(lat);
+
+        // cooords.push(lng,lat);
+
+      var IGThumb = result.data[i].images.thumbnail.url,
+          IGLink = result.data[i].link,
+          IGPlace = result.data[i].location.name;
+
+        // create the popup
       var popup = new mapboxgl.Popup({offset: 25})
           .setHTML('<a href="' + IGLink + '">' + IGPlace+ '</a>');
-          // <a href="http://html.com/attributes/a-href/">Learn about the a href attribute</a>
 
 
       // create DOM element for the marker
@@ -89,12 +88,13 @@ $.getJSON(API_ENDPOINT, function(result, status) {
       el.style.backgroundImage = 'url('+ IGThumb + ')';
 
       // create the marker
-      new mapboxgl.Marker(el, {offset:[-25, -25]})
-          .setLngLat(cooords)
+      var markerOffset = Math.random() * 20 + 20;
+      new mapboxgl.Marker(el, {offset:[-markerOffset, -markerOffset]})
+          .setLngLat([lng,lat])
           .setPopup(popup) // sets a popup on this marker
-          .addTo(map);   
+          .addTo(map); 
+    };
 
-    });
 });
 
 var map = new mapboxgl.Map({
