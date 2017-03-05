@@ -16,7 +16,7 @@
 </head>
 <body>
 <style>
-  #marker {
+  .marker {
       background-image: url('https://www.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg');
       background-size: cover;
       width: 50px;
@@ -26,11 +26,33 @@
     border: 5px solid #fff;
   }
 
+  .marker:hover{
+      /*opacity:1;       */
+      z-index:100;
+  }
+
   .mapboxgl-popup {
       max-width: 200px;
   }
+
+  #info {
+      display: block;
+      position: relative;
+      margin: 0px auto;
+      width: 50%;
+      padding: 10px;
+      border: none;
+      border-radius: 3px;
+      font-size: 12px;
+      text-align: center;
+      color: #222;
+      background: #fff;
+  }
+
 </style>
 <div id='map'></div>
+<pre id='info'></pre>
+
 <script>
 
 function getQueryVariable(variable) {
@@ -42,12 +64,15 @@ function getQueryVariable(variable) {
             return decodeURIComponent(pair[1]);
         }
     }
+    var hash = query.split('/');
+    console.log(hash);
+
     console.log('Query variable %s not found', variable);
 }
 
 var igToken = getQueryVariable('access_token');
 
-var API_ENDPOINT = 'https://api.instagram.com/v1/media/search?lat=37.774621693567425&lng=-122.41453124974647&scope=public_scope&callback=?&access_token=' + igToken;
+var API_ENDPOINT = 'https://api.instagram.com/v1/media/search?lat=45.52245801087795&lng=-122.67773866653444&distance=5000&scope=public_scope&callback=?&access_token=' + igToken;
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiZjk3Mjk2YWYzZTNlYjM3ODdlNzJlOWJlM2VjZGI0ZDEifQ.OTT9oT7CqAc9vZsnJLT51Q';
 
@@ -58,7 +83,29 @@ var FeatureCollection = {
   features: [{"type": "Feature","geometry": {"type": "Point", "coordinates": []},"properties":{}}]
 };
 
-$.getJSON(API_ENDPOINT, function(result, status) {
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/grafa/ciyp4bjnd00042rl3yckm2k3l',
+    center: [-122.65668529673894,45.51442410797918],
+    zoom: 13,
+    // hash: true
+});
+
+var lng;
+var lat;
+
+map.on('mousemove', function (e) {
+    lng = e.lngLat.lng;
+    lat = e.lngLat.lat;
+        
+    document.getElementById('info').innerHTML =
+      lng + ', ' + lat;
+});
+
+var markers;
+
+map.on('load', function () {
+  $.getJSON(API_ENDPOINT, function(result, status) {
     
     if (status !== 'success') return alert('Request to IG failed');
     // console.log(result);
@@ -69,40 +116,55 @@ $.getJSON(API_ENDPOINT, function(result, status) {
         var lng = parseFloat(result.data[i].location.longitude);
         var lat = parseFloat(result.data[i].location.latitude);
 
-        // console.log(lat);
-
-        // cooords.push(lng,lat);
-
       var IGThumb = result.data[i].images.thumbnail.url,
           IGLink = result.data[i].link,
           IGPlace = result.data[i].location.name;
 
         // create the popup
       var popup = new mapboxgl.Popup({offset: 25})
-          .setHTML('<a href="' + IGLink + '">' + IGPlace+ '</a>');
-
+          .setHTML('<a href="' + IGLink + '">' + '<img src="' + IGThumb + '"><br>' + IGPlace + '</a>');
 
       // create DOM element for the marker
       var el = document.createElement('div');
-      el.id = 'marker';
+      el.className = 'marker';
       el.style.backgroundImage = 'url('+ IGThumb + ')';
 
       // create the marker
       var markerOffset = Math.random() * 20 + 20;
-      new mapboxgl.Marker(el, {offset:[-markerOffset, -markerOffset]})
+
+      markers = new mapboxgl.Marker(el, {offset:[-markerOffset, -markerOffset]})
           .setLngLat([lng,lat])
           .setPopup(popup) // sets a popup on this marker
           .addTo(map); 
     };
 
+  });
 });
 
-var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/grafa/cizra0c0x006c2sp6pqer3py2',
-    center: [-122.41453124974647,37.774621693567425],
-    zoom: 12
-});
+
+// Add geolocate control to the map.
+map.addControl(new mapboxgl.GeolocateControl());
+
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+};
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+};
+
+navigator.geolocation.getCurrentPosition(success, error, options);
 
 </script>
 
